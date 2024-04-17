@@ -1,114 +1,95 @@
-import React from "react";
-
-import { UserIcon, MailIcon, KeyIcon } from "@heroicons/react/outline";
-
-function LoginPage() {
+import React, { useState } from "react";
+import bro from "../../images/bro.png";
+import vector from "../../images/Vector.png";
+function Login() {
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    if (newPassword.length < 8) {
+      setPasswordError("Your password is not strong enough.");
+    } else {
+      setPasswordError("");
+    }
+  };
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 sm:flex-row">
-      <div className="sm:w-1/2 bg-white p-8 flex justify-center">
-        <img
-          src="https://via.placeholder.com/300"
-          alt="Placeholder"
-          className="h-48"
-        />
+    <div className="main flex justify-center items-center h-screen">
+      <div className="left w-1/2 bg-[#4BCBEB] h-full px-[100px] pt-[100px] bg-[  rgba(255, 255, 255, 0.06)]">
+        <div className="flex items-center">
+          <img src={vector} alt="Logo" className="mr-2" />
+          <span>
+            <h2 className="text-3xl font-bold text-white">Task Manager List</h2>
+          </span>
+        </div>
+        <img src={bro} />
       </div>
-      <div className="sm:w-1/2 bg-white p-8 flex justify-center items-center">
-        <div className="sm:max-w-md w-full">
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
-            Sign Up for an account
-          </h2>
-          <form className="mt-8 space-y-6" action="#" method="POST">
-            <div>
-              {/* <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
-              ></label> */}
+      <div className="right w-1/2  h-full pt-[100px] ">
+        <div className="flex flex-col mx-[100px]">
+          <h5 className="mb-3 font-bold text-3xl">Sign Up for an Account</h5>
 
-              <div className="relative">
-                <UserIcon className="h-5 w-5 inline-block -mt-1 mr-2" />
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Enter Your Full Name"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                <MailIcon className="h-5 w-5 inline-block -mt-1 mr-2" />
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Email"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                <KeyIcon className="h-5 w-5 inline-block -mt-1 mr-2" />
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Password"
-              />
-              <small className="block text-xs text-gray-400">
-                Your Password must have at least 8 characters
-              </small>
-            </div>
-
-            <div className="flex items-center">
-              <input
-                id="terms"
-                name="terms"
-                type="checkbox"
-                required
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="terms"
-                className="ml-2 block text-sm text-gray-900"
-              >
+          <input
+            id="fullName"
+            className="text-sm w-4/5 px-4 py-4 border border-solid border-gray-300 rounded"
+            type="text"
+            placeholder="Enter Your Full Name"
+            required
+          />
+          <input
+            id="email"
+            className="text-sm w-4/5 px-4 py-4 border border-solid border-gray-300 rounded mt-4"
+            type="email"
+            placeholder="Email"
+            required
+          />
+          <input
+            id="password"
+            className="text-sm w-4/5 px-4 py-4 border border-solid border-gray-300 rounded my-4"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={handlePasswordChange}
+            required
+          />
+          {passwordError && (
+            <div className="text-red-500 text-xs mt-1">{passwordError}</div>
+          )}
+          <div className="mt-4 flex justify-between font-semibold text-sm">
+            <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
+              <input className="mr-1 mb-5" type="checkbox" required />
+              <span>
                 By creating an account means you agree to the
-                <span className="font-bold"> Terms & Conditions</span>
+                <strong>
+                  Terms <br />
+                  and Conditions
+                </strong>
                 and our
-                <span className="font-bold"> privacy Policy</span>
-              </label>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <strong> Privacy Policy</strong>
+              </span>
+            </label>
+          </div>
+          <div className="text-center md:text-left">
+            <button
+              className="mt-4 px-4 py-4 w-4/5 bg-[#4BCBEB]   text-white uppercase rounded text-xs tracking-wider"
+              type="submit"
+            >
+              SignUp
+            </button>
+          </div>
+          <div className="mt-8  mx-4 font-semibold text-sm text-slate-500 text-center md:text-left">
+            Already have an account?
+            <span>
+              <a
+                className="text-red-600 hover:underline hover:underline-offset-4"
+                href="#"
               >
-                Sign Up
-              </button>
-            </div>
-          </form>
+                Login
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default LoginPage;
+export default Login;
