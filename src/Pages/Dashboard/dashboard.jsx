@@ -1,144 +1,226 @@
-// import React from "react";
+import React, { useState } from "react";
+// import Analytics from "/images/Analytics.png";
+import Vector from "../../images/Vector.png"
+import { Link } from "react-router-dom";
+import { Line } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
+import Calendar from "react-calendar";
 
-// export default function Dashboard() {
-//   return (
-//     <div className="px-[34]">
-//       <div>
-//         <header className="w-[1190px] h-[88px] left-[250px] border-dashed">
-//           Dashboard
-//         </header>
-//         <div />
-//         <div className="w-[250px] h-[1024px] border[0px, 1px, 0px, 0px]">
+import "react-calendar/dist/Calendar.css";
 
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBell,
+  faUser,
+  faGreaterThan,
+  faBorderNone,
+} from "@fortawesome/free-solid-svg-icons";
 
-const Dashboard = () => {
+function Dashboard() {
+
+
+  const [date, setDate] = useState(new Date());
+
+  const onChange = (newDate) => {
+    setDate(newDate);
+  };
+
+  const [selectedOption, setSelectedOption] = useState("Weekly");
+
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+    // You can add logic here to handle the selected option
+  };
+
+  const state = {
+    labels: ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
+    datasets: [
+      {
+        label: "Class Strength",
+        backgroundColor: [
+          "#4BCBEB",
+          "#4BCBEB",
+          "#4BCBEB",
+          "#4BCBEB",
+          "#4BCBEB",
+          "#4BCBEB",
+          "#4BCBEB",
+        ],
+        fill: false,
+        lineTension: 0.5,
+        borderColor: "#4BCBEB",
+        borderWidth: 2,
+        data: [10, 14, 17, 16, 19, 16, 17],
+      },
+    ],
+  };
+
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="w-1/4 bg-white text-[#0F172A]">
-        <div className="p-4">
-          <div className="text-lg py-8 font-[Roboto] grid-rows-1 text-[#4BCBEB] font-bold">
-            Task List Manager
-          </div>
-          <h1 className="text-lg font-bold mb-4">Menu</h1>
-          <div
-            className="w-[218px]
-h-[216px];
-top- [155px]
-left-[16px]
-gap-[8px]
+    <div className=" w-full  grid grid-rows-3 grid-flow-col bg-slate-100">
+      {/* ==============================================This is sidebar ==================================== */}
 
-"
-          >
-            <ul>
-              <div className="text-[#4BCBEB] font-[Poppins] w-[81px] h-[21px] size-[4px] font-bold ">
-                <li className="py-2 ">Dashboard</li>
-              </div>
-              <div className="text-black font-[Poppins] w-[81px] h-[21px] size-[4px]">
-                {" "}
-                <li className="py-2">User</li>
-              </div>
-              <div className="text-black font-[Poppins] w-[81px] h-[21px] size-[4px]">
-                {" "}
-                <li className="py-2">Task</li>
-              </div>
-              <div className="text-black font-[Poppins] w-[81px] h-[21px] size-[4px] ">
-                {" "}
-                <li className="py-2">Settings</li>
-              </div>
-            </ul>
+      <div class="row-span-3 bg-[#FFFFFF] w-[320px] shadow-xl ">
+        <section className="flex items-center m-3 p-3 border border-gray-300 shadow-lg rounded">
+          <img src={Vector} alt="Logo" className="mr-2 px-2" />
+          <span>
+            <h2 className="text-1xl font-bold text-[#4BCBEB]">
+              Task Manager List
+            </h2>
+          </span>
+        </section>
+        <div class="border-b border-[#F6F8FA] w-[10px]"></div>
+        <h1 className="m-5 text-lg pl-6 pt-5 font-bold ">Menu</h1>
+        {/* <Link to="/dashboard">Dashboard</Link> */}
+        <div className="m-4 text-lg pl-6 p-3 font-bold text-[#4BCBEB] shadow-md rounded-xl ">
+          <Link to="/Dashboard">Dashboard</Link>
+        </div>
+        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA]">
+          <Link to="/Users">Users</Link>
+        </div>
+        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA] ">
+          <Link to="/tasks">Tasks</Link>
+        </div>
+        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA]">
+          <Link to="/settings">Settings</Link>
+        </div>
+
+        {/* <FA icon={faDashboard} /> */}
+
+        {/* <h2 className="text-3xl font-bold text-white">Task Manager List</h2> */}
+      </div>
+      <div className="col-span-2">
+        {/*============================== this is Dashboard=================================== */}
+
+        <div className="bg-[#FFFFFF] w-[1030px] flex m-1  border-gray-100 shadow-lg rounded">
+          <div className=" text-3xl p-6 font-bold right">Dashboard</div>
+          <div className="left p-6 pl-[700px] size-max">
+            <FontAwesomeIcon icon={faBell} />
+          </div>
+          <div className="right p-6 pl-[5px] ">
+            <FontAwesomeIcon icon={faUser} />
+          </div>
+          <div className="p-5 pl-[3px] ">
+            <Link to="/usmanshahid">Usman Shahid</Link>
+            <p>Status 200</p>
+          </div>
+          <div className="p-6 pl-[2px] ">
+            <FontAwesomeIcon icon={faGreaterThan} />
           </div>
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-slate-500">
-        {/* Header */}
-        <header className=" bg-black w-[700px]font-[Poppins] text-[16px] text-[#bec6d8] font-[bold] p-4">
-          Dashboard
-        </header>
+        {/*============================================= This is bottom part =======================================*/}
+        <section className="bg-white row-span-2 col-span-2 m-20 ">
+          <h1 className="text-2xl font-bold  p-6">Analytics</h1>
+          {/* ==========================This is bottom grid section for progress bar================================= */}
 
-        {/* Main Content */}
-        <main className="flex-1 p-4">
-          {/* Image */}
-          <div className="flex justify-center items-center h-full">
-            <img
-              src="your-image-url.jpg"
-              alt="Your Image"
-              className="max-w-full max-h-full"
-            />
-          </div>
-        </main>
+          <section className="  grid grid-cols-4 gap-4">
+            <div className=" bg-[#F4F2FF] h-32 m-4 rounded-2xl  p-4">
+              <h1 className=" pb-3 font-medium">Total Task</h1>
+              <div className="mb-1 text-xl font-medium text-[#64748B]  pb-2">
+                90/100
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
+                <div className="bg-[#4BCBEB] h-4 rounded-full  w-4/5"></div>
+              </div>
+            </div>
+
+            <div className=" bg-[#E2EFFC] h-32 m-4 rounded-2xl p-4">
+              <h1 className=" pb-3 font-medium">Completed Task</h1>
+              <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
+                80/100
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                <div className="bg-[#5CB85C] h-4 rounded-full w-2/4"></div>
+              </div>
+            </div>
+
+            <div className=" bg-[#FBEDD2] h-32 m-4 rounded-2xl p-4">
+              <h1 className=" pb-3 font-medium">Pending Task</h1>
+              <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
+                50/100
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
+                <div className="bg-[#F0AD4E] h-4 rounded-full  w-2/5"></div>
+              </div>
+            </div>
+
+            <div className=" bg-[#E0F6F4] h-32 m-4 rounded-2xl p-4">
+              <h1 className=" pb-3 font-medium"> Decline Task</h1>
+              <div>
+                <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
+                  10/100
+                </div>
+                <div clasName="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
+                  <div className="bg-[#D9534F] h-4 rounded-full  w-1/5"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ======================================This is another grid for chart and calender========================== */}
+
+          <section className=" bg-slate-300 grid grid-cols-2  col-auto">
+            <div className="flex-1 bg-white p-4 ">
+              <div className=" flex">
+                <h1 className="text-2xl font-bold p-6 m-1">
+                  Total Task Ratio{" "}
+                </h1>
+                <span className="dropdownbutton text-[#4BCBEB]  text-xl p-8  ml-24 font-bold ">
+                  <select value={selectedOption} onChange={handleSelectChange}>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Daily">Daily</option>
+                  </select>
+                </span>
+              </div>
+              <div className=" h-60  w-auto ">
+                <Line
+                  data={state}
+                  options={{
+                    scales: {
+                      x: {
+                        display: true,
+                        title: {
+                          display: true,
+                        },
+                        grid: {
+                          display: false, // Hide x-axis grid lines
+                        },
+                      },
+                      y: {
+                        display: true,
+                        title: {
+                          display: true,
+                        },
+                        grid: {
+                          display: true, // Hide y-axis grid lines
+                        },
+                        ticks: {
+                          beginAtZero: false,
+                        },
+                      },
+                    },
+                    plugins: {
+                      legend: {
+                        display: false, // Hide legend
+                      },
+                    },
+                    responsive: true,
+                  }}
+                />
+              </div>
+            </div>
+            <div className=" bg-white p-4">
+              <h1 className=" text-2xl font-bold p-6 m-1">Calender</h1>
+              <div className=" bg-white pl-[80px]">
+                <Calendar onChange={onChange} value={date} />
+              </div>
+            </div>
+          </section>
+        </section>
       </div>
     </div>
   );
-};
-
+}
 export default Dashboard;
-// import React from "react";
-
-// const Dashboard = () => {
-//   return (
-//     <div className="flex h-screen">
-//       {/* Sidebar */}
-//       <div className="w-1/4 bg-[#FFFFFF] text-[#0F172A] flex flex-col items-center justify-center">
-//         <div className="p-4">
-//           <div className="text-lg py-8 font-[Roboto]">Task List Manager</div>
-//           <h1 className="text-lg font-bold mb-4">Menu</h1>
-//           <ul>
-//             <li className="py-2">Dashboard</li>
-//             <li className="py-2">User</li>
-//             <li className="py-2">Task</li>
-//             <li className="py-2">Settings</li>
-//           </ul>
-//         </div>
-//       </div>
-
-//       {/* Main Content */}
-//       <div className="flex-1 flex flex-col">
-//         {/* Header */}
-//         <header className="w-full font-[Poppins] text-[16px] text-[#0F172A] bg-[#FFFFFF]  p-4">
-//           <div className="flex items-center justify-center">
-//             <img
-//               src="your-vector-url.svg"
-//               alt="Vector"
-//               className="max-w-full max-h-full"
-//             />
-//             <hr className="w-1/2 mx-4 border-t-[#0F172A] border-opacity-10" />
-//             <span>Task Manager</span>
-//           </div>
-//         </header>
-
-//         {/* Main Content */}
-//         <main className="flex-1 p-4 grid grid-cols-3 gap-4">
-//           {/* Image */}
-//           <div className="col-span-2 flex justify-center items-center">
-//             <img
-//               src="your-image-url.jpg"
-//               alt="Your Image"
-//               className="max-w-full max-h-full"
-//             />
-//           </div>
-
-//           {/* Tasks */}
-//           <div className="col-span-1">
-//             <h2 className="text-lg font-bold mb-4">Tasks</h2>
-//             <ul>
-//               <li className="py-2">Task 1</li>
-//               <li className="py-2">Task 2</li>
-//               <li className="py-2">Task 3</li>
-//             </ul>
-//           </div>
-//         </main>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
