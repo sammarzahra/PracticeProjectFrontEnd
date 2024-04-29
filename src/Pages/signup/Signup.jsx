@@ -176,7 +176,7 @@ function SignUp() {
             <span>
               <a
                 className="text-[#4BCBEB] hover:underline hover:underline-offset-4 text-base font-bold"
-                href="#"
+                href="/"
               >
                 Sign Up
               </a>

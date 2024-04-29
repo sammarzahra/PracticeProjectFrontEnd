@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import TaskForm from "../Taskform/Taskform";
+import EditForm from "../Taskform/EditTask"
 function Tasks() {
   const tasks = [
     {
@@ -67,13 +68,29 @@ function Tasks() {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const toggleOptions = (taskId) => {
-    setShowOptions({ ...showOptions, [taskId]: !showOptions[taskId] });
-    setSelectedTaskId(taskId);
-  };
+  setShowOptions((prevOptions) => ({
+    ...prevOptions,
+    [taskId]: !prevOptions[taskId],
+  }));
+  setSelectedTaskId(taskId);
+};
+  
   const [showForm, setShowForm] = useState(false);
-
+  const [showEditForm, setShowEditForm] = useState(false);
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+  const handleEditClick = (taskId) => {
+    setSelectedTaskId(taskId);
+    setShowEditForm(true); // Set showEditForm to true
+  };
+  
+  const handleAddClick = (taskId) => {
+    setSelectedTaskId(taskId);
+    setShowForm(true);
+  };
+  const handleDeleteClick = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 return (
     <div className=" w-full h-full grid grid-rows-3 grid-flow-col gap-4">
@@ -157,6 +174,7 @@ return (
               />
             </div>
             {showForm && <TaskForm onClose={toggleForm} />}
+            {showEditForm && <EditForm onClose={() => setShowEditForm(false)} />}
             <div className="flex-1 text-white bg-[#4BCBEB] rounded-lg ml-[300px] h-[34px] w-[5px] m-[70px] text-center p-2">
               <button onClick={toggleForm}>Add Task</button>
             </div>
@@ -217,18 +235,21 @@ return (
                         <button
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-right"
                           role="menuitem"
+                          onClick={() => handleAddClick(task.id)}
                         >
                           Add
                         </button>
                         <button
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-right"
                           role="menuitem"
+                          onClick={() => handleDeleteClick(task.id)}
                         >
                           Delete
                         </button>
                         <button
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-right"
                           role="menuitem"
+                          onClick={() => handleEditClick(task.id)}
                         >
                           Edit
                         </button>

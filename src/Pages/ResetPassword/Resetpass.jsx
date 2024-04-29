@@ -82,7 +82,7 @@ function Resetpass() {
             <br></br>
             <a
               className="text-[#4BCBEB] px-28 hover:underline-offset-4 text-center font-bold"
-              href="#"
+              href="/"
             >
               Back to signIn
             </a>
@@ -92,7 +92,7 @@ function Resetpass() {
             <span>
               <a
                 className="text-[#4BCBEB] hover:underline hover:underline-offset-4 font-bold"
-                href="#"
+                href="/signup"
               >
                 SignUp
               </a>

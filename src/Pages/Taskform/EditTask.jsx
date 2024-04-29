@@ -1,8 +1,7 @@
-
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-function TaskForm({ onClose }) {
+function EditForm({ onClose }) {
   return (
     <div className="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center">
     <div className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50"></div>
@@ -10,7 +9,7 @@ function TaskForm({ onClose }) {
       <button onClick={onClose} className="absolute size-[30rem]  right-2 bg-gray-500 border w-[24px] h-[20px] pb-6 rounded-[12px]">
         <FontAwesomeIcon icon={faTimes} />
       </button>
-      <h2 className="text-xl font-bold mb-4 text-center">Add Task</h2>
+      <h2 className="text-xl font-bold mb-4 text-center">Edit Task</h2>
         <p className=" pl-[100px] text-[#888888]">Fill the information below to add new task as per</p> <p className="pl-[190px] text-[#888888]">your requirement</p>
         <div className="mb-4">
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">
@@ -89,4 +88,4 @@ function TaskForm({ onClose }) {
   );
 }
 
-export default TaskForm;
+export default EditForm;
