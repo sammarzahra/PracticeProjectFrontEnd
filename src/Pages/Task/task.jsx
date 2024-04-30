@@ -10,7 +10,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import TaskForm from "../Taskform/Taskform";
-import EditForm from "../Taskform/EditTask"
+import EditForm from "../Taskform/EditTask";
+import DeleteForm from "../Taskform/Delete";
 function Tasks() {
   const tasks = [
     {
@@ -68,15 +69,16 @@ function Tasks() {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const toggleOptions = (taskId) => {
-  setShowOptions((prevOptions) => ({
-    ...prevOptions,
-    [taskId]: !prevOptions[taskId],
-  }));
-  setSelectedTaskId(taskId);
-};
-  
+    setShowOptions((prevOptions) => ({
+      ...prevOptions,
+      [taskId]: !prevOptions[taskId],
+    }));
+    setSelectedTaskId(taskId);
+  };
+
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
   const toggleForm = () => {
     setShowForm(!showForm);
   };
@@ -84,20 +86,22 @@ function Tasks() {
     setSelectedTaskId(taskId);
     setShowEditForm(true); // Set showEditForm to true
   };
-  
+
   const handleAddClick = (taskId) => {
     setSelectedTaskId(taskId);
     setShowForm(true);
   };
   const handleDeleteClick = (taskId) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+    setSelectedTaskId(taskId);
+    setShowDeleteForm(true);
   };
-return (
+  // const handleDeleteClick = (taskId) => {
+  //   setTasks(tasks.filter((task) => task.id !== taskId));
+  // };
+  return (
     <div className=" w-full h-full grid grid-rows-3 grid-flow-col gap-4">
       {/*================================== This is sidebar============================= */}
-      
-      
-      
+
       <div class="row-span-3 bg-[#FFFFFF] w-[320px] ">
         <section className="flex items-center m-3 p-3 border border-gray-300 shadow-lg rounded">
           {/* <img src={Task} alt="Logo" className="mr-2 px-2" /> */}
@@ -126,18 +130,15 @@ return (
         {/* <h2 className="text-3xl font-bold text-white">Task Manager List</h2> */}
       </div>
 
+      {/* masla============================================================================ */}
 
-{/* masla============================================================================ */}
-     
-     
-     
       <div className="col-span-2">
         {/*================================================================ this is Dashboard */}
-            <div className="bg-[#FFFFFF] w-[1155px]  flex">
-                <div className=" text-3xl p-6 font-bold right">Task</div>
-                    <div className="left p-6 pl-[700px] size-max">
-                    <FontAwesomeIcon icon={faBell} />
-                </div>
+        <div className="bg-[#FFFFFF] w-[1155px]  flex">
+          <div className=" text-3xl p-6 font-bold right">Task</div>
+          <div className="left p-6 pl-[700px] size-max">
+            <FontAwesomeIcon icon={faBell} />
+          </div>
           <div className="right p-6 pl-[5px] ">
             <FontAwesomeIcon icon={faUser} />
           </div>
@@ -148,13 +149,12 @@ return (
           <div className="p-6 pl-[2px] ">
             <FontAwesomeIcon icon={faGreaterThan} />
           </div>
-            </div>
-            
-            
+        </div>
+
         {/*============================================================= This is bottom part */}
 
         <section className="bg-[#ECE6E6] row-span-2 col-span-2">
-         <div className="flex flex-nowrap">
+          <div className="flex flex-nowrap">
             <div className="p-8 m-3">
               <h2 className=" text-xl font-bold">Start date: </h2>
               <input
@@ -174,7 +174,13 @@ return (
               />
             </div>
             {showForm && <TaskForm onClose={toggleForm} />}
-            {showEditForm && <EditForm onClose={() => setShowEditForm(false)} />}
+            {showEditForm && (
+              <EditForm onClose={() => setShowEditForm(false)} />
+            )}
+            {showDeleteForm && (
+              <DeleteForm onClose={() => setShowDeleteForm(false)} />
+            )}
+
             <div className="flex-1 text-white bg-[#4BCBEB] rounded-lg ml-[300px] h-[34px] w-[5px] m-[70px] text-center p-2">
               <button onClick={toggleForm}>Add Task</button>
             </div>
@@ -193,11 +199,8 @@ return (
               <button>Search</button>
             </div>
           </div>
-         
-         
-         
+
           <div className="bg-gray-200 p-2 grid  grid-cols-3 gap-4">
-            
             {tasks.map((task) => (
               <div
                 key={task.id}
@@ -259,15 +262,10 @@ return (
                 </span>
               </div>
             ))}
-
-
-
-
-                </div>
-            </section>
-        </div>
-        </div>
-      
+          </div>
+        </section>
+      </div>
+    </div>
   );
 }
 export default Tasks;

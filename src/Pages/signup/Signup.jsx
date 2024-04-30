@@ -104,6 +104,7 @@ function SignUp() {
       setPasswordError("");
     }
   };
+ 
   return (
     <div className="main flex justify-center items-center h-screen">
       <div className="left w-1/2 bg-[#4BCBEB] h-full px-[130px] pt-[100px] bg-[  rgba(255, 255, 255, 0.06)]">
@@ -134,6 +135,7 @@ function SignUp() {
             type="email"
             placeholder="Email"
             required
+            
           />
           <input
             id="password"

@@ -20,9 +20,8 @@ function App() {
           <Route path="/ResetPass" element={<Resetpass />}></Route>
           <Route path="/UpdatePass" element={<UpdatePass />}></Route>
           <Route path="/Dashboard" element={<Dashboard />}></Route>
-          <Route path="/tasks" element={<Tasks/>}></Route>
-          <Route path="/Users" element={<Users1/>}></Route>
-          
+          <Route path="/tasks" element={<Tasks />}></Route>
+          <Route path="/Users" element={<Users1 />}></Route>
         </Routes>
       </BrowserRouter>
     </>

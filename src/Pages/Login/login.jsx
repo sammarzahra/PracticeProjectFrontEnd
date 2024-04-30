@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import bro from "../../images/bro.png";
 import vector from "../../images/Vector.png";
 function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -11,6 +13,24 @@ function Login() {
       setPasswordError("Your password is not strong enough.");
     } else {
       setPasswordError("");
+    }
+  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const collectData = async () => {
+    console.warn(name, email, password);
+    let result = await fetch("http://localhost:5000/register", {
+      method: "post",
+      body: JSON.stringify({ name, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    result = await result.json();
+    console.warn(result);
+    if (result) {
+      navigate("/signup");
     }
   };
   return (
@@ -34,6 +54,8 @@ function Login() {
             type="text"
             placeholder="Enter Your Full Name"
             required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <input
             id="email"
@@ -41,6 +63,8 @@ function Login() {
             type="email"
             placeholder="Email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             id="password"
@@ -48,7 +72,8 @@ function Login() {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={handlePasswordChange}
+            // onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           {passwordError && (
@@ -72,6 +97,7 @@ function Login() {
             <button
               className="mt-4 px-4 py-4 w-4/5 bg-[#4BCBEB]   text-white uppercase rounded text-xs tracking-wider"
               type="submit"
+              onClick={collectData}
             >
               SignUp
             </button>

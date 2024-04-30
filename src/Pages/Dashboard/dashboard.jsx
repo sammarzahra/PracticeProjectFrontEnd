@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import Analytics from "/images/Analytics.png";
-import Vector from "../../images/Vector.png"
+import Vector from "../../images/Vector.png";
 import { Link } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
@@ -16,10 +16,10 @@ import {
   faGreaterThan,
   faBorderNone,
 } from "@fortawesome/free-solid-svg-icons";
+import Tasksvg from "../../components/SvgComponents/User.svg";
+import Usersvg from "../../components/SvgComponents/User.svg";
 
 function Dashboard() {
-
-
   const [date, setDate] = useState(new Date());
 
   const onChange = (newDate) => {
@@ -75,9 +75,16 @@ function Dashboard() {
         <div className="m-4 text-lg pl-6 p-3 font-bold text-[#4BCBEB] shadow-md rounded-xl ">
           <Link to="/Dashboard">Dashboard</Link>
         </div>
-        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA]">
-          <Link to="/Users">Users</Link>
+
+        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA] flex ">
+          <Link to="/Users">
+            <div>
+              <Usersvg />
+            </div>
+            Users
+          </Link>
         </div>
+
         <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA] ">
           <Link to="/tasks">Tasks</Link>
         </div>
@@ -92,7 +99,7 @@ function Dashboard() {
       <div className="col-span-2">
         {/*============================== this is Dashboard=================================== */}
 
-        <div className="bg-[#FFFFFF] w-[1030px] flex m-1  border-gray-100 shadow-lg rounded">
+        <div className="bg-[#FFFFFF] w-[1170px] flex m-1  border-gray-100 shadow-lg rounded">
           <div className=" text-3xl p-6 font-bold right">Dashboard</div>
           <div className="left p-6 pl-[700px] size-max">
             <FontAwesomeIcon icon={faBell} />
