@@ -34,18 +34,18 @@ function Login() {
     }
   };
   return (
-    <div className="main flex justify-center items-center h-screen">
-      <div className="left w-1/2 bg-[#4BCBEB] h-auto px-[100px] pt-[100px] bg-[  rgba(255, 255, 255, 0.06)]">
+    <div className="main flex flex-col md:flex-row justify-center items-center h-screen">
+      <div className="left w-full md:w-1/2 bg-[#4BCBEB] h-auto px-6 md:px-20 py-20 bg-[  rgba(255, 255, 255, 0.06)] hidden md:block">
         <div className="flex items-center">
           <img src={vector} alt="Logo" className="mr-2" />
           <span>
             <h2 className="text-3xl font-bold text-white">Task Manager List</h2>
           </span>
         </div>
-        <img src={bro} />
+        <img src={bro} alt="Illustration" className="w-full" />
       </div>
-      <div className="right w-1/2  h-full pt-[100px] ">
-        <div className="flex flex-col mx-[100px]">
+      <div className="right w-1/2 md:w-1/2  h-full py-20">
+        <div className="flex flex-col mx-6  md:mx-20">
           <h5 className="mb-3 font-bold text-3xl">Sign Up for an Account</h5>
 
           <input
@@ -102,11 +102,11 @@ function Login() {
               SignUp
             </button>
           </div>
-          <div className="mt-8  mx-4 font-semibold text-sm text-slate-500 text-center md:text-left">
+          <div className="mt-8  mx-16 font-semibold text-sm text-slate-500 text-center md:text-left">
             Already have an account?
             <span>
               <a
-                className="text-red-600 hover:underline hover:underline-offset-4"
+                className="text-[#4BCBEB] hover:underline hover:underline-offset-4"
                 href="/signup"
               >
                 Login

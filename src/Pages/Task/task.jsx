@@ -11,7 +11,7 @@ import {
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import TaskForm from "../Taskform/Taskform";
 import EditForm from "../Taskform/EditTask";
-import DeleteForm from "../Taskform/Delete";
+import DeleteForm from "../Taskform/delete";
 function Tasks() {
   const tasks = [
     {
