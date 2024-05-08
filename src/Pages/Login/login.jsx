@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bro from "../../images/bro.png";
 import vector from "../../images/Vector.png";
-import UserIcon from "../../../../svg components/UserIcon";
-import Email from "../../../../svg components/Email";
-import PassLock from "../../../../svg components/PassLock";
+import UserIcon from "../../../svg components/UserIcon";
+import Email from "../../../svg components/Email";
+import PassLock from "../../../svg components/PassLock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+// import { useDispatch } from "../../Redux/"
+// import { setToken } from './authSlice';
 
 function Login() {
   const [password, setPassword] = useState("");
