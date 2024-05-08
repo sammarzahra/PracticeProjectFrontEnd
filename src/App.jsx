@@ -8,6 +8,7 @@ import Signup from "./Pages/signup/Signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import Users from "./Pages/users/user";
 import Users1 from "./Pages/users/user1";
+import Notifications from "./Pages/Notifications/notifications";
 // import Users3 from "./Pages/users/user3";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />}></Route>
           <Route path="/tasks" element={<Tasks />}></Route>
           <Route path="/Users" element={<Users1 />}></Route>
+          <Route path="/notifications" element={<Notifications/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

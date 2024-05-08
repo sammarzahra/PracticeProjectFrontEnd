@@ -1,38 +1,23 @@
 import React, { useState } from "react";
-// import Analytics from "/images/Analytics.png";
-import Vector from "../../images/Vector.png";
-import { Link } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 import Calendar from "react-calendar";
-
 import "react-calendar/dist/Calendar.css";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBell,
-  faUser,
-  faGreaterThan,
-  faBorderNone,
-} from "@fortawesome/free-solid-svg-icons";
-import Tasksvg from "../../components/SvgComponents/User.svg";
-import Usersvg from "../../components/SvgComponents/User.svg";
+import Header from "../../components/Header";
+import Menu from "../../components/Menu";
+import { useMediaQuery } from "@react-hook/media-query";
 
 function Dashboard() {
   const [date, setDate] = useState(new Date());
-
   const onChange = (newDate) => {
     setDate(newDate);
   };
-
   const [selectedOption, setSelectedOption] = useState("Weekly");
-
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
     // You can add logic here to handle the selected option
   };
-
   const state = {
     labels: ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
     datasets: [
@@ -55,68 +40,49 @@ function Dashboard() {
       },
     ],
   };
+  const isLargeScreen = useMediaQuery("(min-width: 768px)");
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className=" w-full  grid grid-rows-3 grid-flow-col bg-slate-100">
-      {/* ==============================================This is sidebar ==================================== */}
-
-      <div class="row-span-3 bg-[#FFFFFF] w-[320px] shadow-xl ">
-        <section className="flex items-center m-3 p-3 border border-gray-300 shadow-lg rounded">
-          <img src={Vector} alt="Logo" className="mr-2 px-2" />
-          <span>
-            <h2 className="text-1xl font-bold text-[#4BCBEB]">
-              Task Manager List
-            </h2>
-          </span>
-        </section>
-        <div class="border-b border-[#F6F8FA] w-[10px]"></div>
-        <h1 className="m-5 text-lg pl-6 pt-5 font-bold ">Menu</h1>
-        {/* <Link to="/dashboard">Dashboard</Link> */}
-        <div className="m-4 text-lg pl-6 p-3 font-bold text-[#4BCBEB] shadow-md rounded-xl ">
-          <Link to="/Dashboard">Dashboard</Link>
+    <div className=" flex flex-col md:flex-row  h-screen">
+      {!isLargeScreen && (
+        <div className="md:hidden">
+          <button
+            className="focus:outline-none"
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            <svg
+              className="w-6 h-6 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {showMenu ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              )}
+            </svg>
+          </button>
         </div>
+      )}
 
-        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA] flex ">
-          <Link to="/Users">
-            <div>
-              <Usersvg />
-            </div>
-            Users
-          </Link>
-        </div>
+      {isLargeScreen && <Menu />}
 
-        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA] ">
-          <Link to="/tasks">Tasks</Link>
-        </div>
-        <div className="m-4 text-lg pl-6 p-3 border-2  border-[#F6F8FA]">
-          <Link to="/settings">Settings</Link>
-        </div>
+      <div className="  w-full  md:w-10/12 bg-[#F6F8FA]">
+        <Header name="Dashboard" />
 
-        {/* <FA icon={faDashboard} /> */}
-
-        {/* <h2 className="text-3xl font-bold text-white">Task Manager List</h2> */}
-      </div>
-      <div className="col-span-2">
-        {/*============================== this is Dashboard=================================== */}
-
-        <div className="bg-[#FFFFFF] w-[1170px] flex m-1  border-gray-100 shadow-lg rounded">
-          <div className=" text-3xl p-6 font-bold right">Dashboard</div>
-          <div className="left p-6 pl-[700px] size-max">
-            <FontAwesomeIcon icon={faBell} />
-          </div>
-          <div className="right p-6 pl-[5px] ">
-            <FontAwesomeIcon icon={faUser} />
-          </div>
-          <div className="p-5 pl-[3px] ">
-            <Link to="/usmanshahid">Usman Shahid</Link>
-            <p>Status 200</p>
-          </div>
-          <div className="p-6 pl-[2px] ">
-            <FontAwesomeIcon icon={faGreaterThan} />
-          </div>
-        </div>
-
-        {/*============================================= This is bottom part =======================================*/}
+        {/*=================pl-[2px]============================ This is bottom part =======================================*/}
         <section className="bg-white row-span-2 col-span-2 m-20 ">
           <h1 className="text-2xl font-bold  p-6">Analytics</h1>
           {/* ==========================This is bottom grid section for progress bar================================= */}

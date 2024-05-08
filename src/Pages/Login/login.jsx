@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bro from "../../images/bro.png";
 import vector from "../../images/Vector.png";
+import UserIcon from "../../../../svg components/UserIcon";
+import Email from "../../../../svg components/Email";
+import PassLock from "../../../../svg components/PassLock";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -15,12 +23,14 @@ function Login() {
       setPasswordError("");
     }
   };
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const collectData = async () => {
     console.warn(name, email, password);
-    let result = await fetch("http://localhost:5000/register", {
+    let result = await fetch("http://localhost:3000/api/users/signup", {
       method: "post",
       body: JSON.stringify({ name, email, password }),
       headers: {
@@ -30,9 +40,24 @@ function Login() {
     result = await result.json();
     console.warn(result);
     if (result) {
+      localStorage.setItem("user", JSON.stringify(result));
       navigate("/signup");
     }
   };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const validateEmail = () => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+
   return (
     <div className="main flex flex-col md:flex-row justify-center items-center h-screen">
       <div className="left w-full md:w-1/2 bg-[#4BCBEB] h-auto px-6 md:px-20 py-20 bg-[  rgba(255, 255, 255, 0.06)] hidden md:block">
@@ -47,38 +72,72 @@ function Login() {
       <div className="right w-1/2 md:w-1/2  h-full py-20">
         <div className="flex flex-col mx-6  md:mx-20">
           <h5 className="mb-3 font-bold text-3xl">Sign Up for an Account</h5>
-
-          <input
-            id="fullName"
-            className="text-sm w-4/5 px-4 py-4 border border-solid border-gray-300 rounded"
-            type="text"
-            placeholder="Enter Your Full Name"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            id="email"
-            className="text-sm w-4/5 px-4 py-4 border border-solid border-gray-300 rounded mt-4"
-            type="email"
-            placeholder="Email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            id="password"
-            className="text-sm w-4/5 px-4 py-4 border border-solid border-gray-300 rounded my-4"
-            type="password"
-            placeholder="Password"
-            value={password}
-            // onChange={handlePasswordChange}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          {passwordError && (
-            <div className="text-red-500 text-xs mt-1">{passwordError}</div>
-          )}
+          <div className="relative">
+            <div className="flex items-center border border-solid border-gray-300 rounded w-4/5">
+              <div className=" mt-1 ml-2">
+                <UserIcon />
+              </div>
+              <input
+                id="fullName"
+                className="text-sm flex-1 px-4 py-4 border-none outline-none"
+                type="text"
+                placeholder="Enter Your Full Name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          </div>
+          <br />
+          <div className="relative">
+            <div className="flex items-center border border-solid border-gray-300 rounded w-4/5">
+              <div className=" mt-1 ml-2">
+                <Email />
+              </div>
+              <input
+                id="email"
+                className="text-sm flex-1 px-4 py-4 border-none outline-none"
+                type="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={validateEmail}
+              />
+            </div>
+            {emailError && (
+              <div className="text-red-500 text-xs mt-1">{emailError}</div>
+            )}
+          </div>
+          <br />
+          <div className="relative">
+            <div className="flex items-center border border-solid border-gray-300 rounded w-4/5">
+              <div className=" mt-1 ml-2">
+                <PassLock />
+              </div>
+              <input
+                id="password"
+                className="text-sm flex-1 px-4 py-4 border-none outline-none"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+              <span
+                className="cursor-pointer"
+                onClick={handleTogglePasswordVisibility}
+              >
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className="text-gray-400 pr-2"
+                />
+              </span>
+            </div>
+            {passwordError && (
+              <div className="text-red-500 text-xs mt-1">{passwordError}</div>
+            )}
+          </div>
           <div className="mt-4 flex justify-between font-semibold text-sm">
             <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
               <input className="mr-1 mb-5" type="checkbox" required />
@@ -118,4 +177,5 @@ function Login() {
     </div>
   );
 }
+
 export default Login;
