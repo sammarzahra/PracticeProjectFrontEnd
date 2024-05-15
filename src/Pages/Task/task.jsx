@@ -15,7 +15,7 @@ function Tasks() {
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
-  const [loading,setloading]=useState(false);
+  const [loading, setloading] = useState(false);
 
   const colors = [
     "bg-red-500",
@@ -59,6 +59,7 @@ function Tasks() {
         setSubmittedData([...submittedData, data]); // Update frontend state with the new task
         setFilteredTasks([...filteredTasks, data]); // Update filtered tasks to include the new task
         setShowModal(false);
+       
         console.log(response);
       })
       .catch((error) => {
@@ -80,6 +81,8 @@ function Tasks() {
       task.title.toLowerCase().includes(query)
     );
     setFilteredTasks(filteredTasks);
+   
+    
     console.log(filteredTasks);
   };
 
@@ -117,7 +120,6 @@ function Tasks() {
               />
             </div>
 
-            {/* =======================masla----------------------------------------------- */}
             <button
               className="h-[36px] w-[140px] ml-auto  pt-14"
               onClick={() => setShowModal(true)}
@@ -146,63 +148,65 @@ function Tasks() {
             <button className="h-[36px] w-[120px] bg-[#4BCBEB] text-white rounded-r-lg m mt-2">
               Search
             </button>
-            
           </div>
           {loading ? (
-                        <div className="flex items-center justify-center h-screen">
-                            <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-800"></div>
-                        </div>
-                    ) : (
+            <div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-800"></div>
+            </div>
+          ) : (
+            <div className="pt-14 grid h-auto  w-full grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 px-2 md:px-10">
+              {filteredTasks.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-white  rounded-xl lg:w-[100%] md:w-[70%]  shadow-md "
+                >
+                  <div
+                    className={`h-6 mb-6 ${getRandomColor()} rounded-t-xl`}
+                  />
 
-          <div className="pt-14 grid h-auto  w-full grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 px-2 md:px-10">
-            {filteredTasks.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white  rounded-xl lg:w-[100%] md:w-[70%]  shadow-md "
-              >
-                <div className={`h-6 mb-6 ${getRandomColor()} rounded-t-xl`} />
-
-                <div className="flex">
-                  <p className="text-sm  pb-3 font-bold px-3">Title:</p>
-                  <div>
-                    <Dropdown id={item._id}/>
+                  <div className="flex">
+                    <p className="text-sm  pb-3 font-bold px-3">Title:</p>
+                    <div>
+                      <Dropdown id={item._id} />
+                    </div>
+                  </div>
+                  <p className="px-3 pb-3">{item.title}</p>
+                  <div className="text-sm font-bold mt-2 px-3">
+                    Description:
+                  </div>
+                  <div className="px-3 pb-3">{item.description}</div>
+                  <div className="text-sm pb-3 font-bold mt-2 px-3">
+                    file:
+                  </div>
+                  <img
+                    src={`http://localhost:3000/uploads/${item.attachment}`}
+                    alt="Attachment"
+                    className="mt-1 w-full h-24 object-cover rounded-lg"
+                  />
+                  <div className="flex justify-between mt-2">
+                    <div className="text-sm pb-3 font-bold px-3">
+                      Start Date:
+                    </div>
+                    <div className="text-sm pb-3 font-bold mr-3">End Date:</div>
+                  </div>
+                  <div className="flex justify-between mt-1">
+                    <div className="text-sm px-3">
+                      {formatDate(item.startDate)}
+                    </div>
+                    <div className="text-sm mr-3 mb-3">
+                      {formatDate(item.endDate)}
+                    </div>
                   </div>
                 </div>
-                <p className="px-3 pb-3">{item.title}</p>
-                <div className="text-sm font-bold mt-2 px-3">Description:</div>
-                <div className="px-3 pb-3">{item.description}</div>
-                <div className="text-sm pb-3 font-bold mt-2 px-3">
-                  Attachment:
-                </div>
-                <img
-                  src={Cover1}
-                  alt="Attachment"
-                  className="mt-1 w-full h-24 object-cover rounded-lg"
-                />
-                <div className="flex justify-between mt-2">
-                  <div className="text-sm pb-3 font-bold px-3">Start Date:</div>
-                  <div className="text-sm pb-3 font-bold mr-3">End Date:</div>
-                </div>
-                <div className="flex justify-between mt-1">
-                  <div className="text-sm px-3">
-                    {formatDate(item.startDate)}
-                  </div>
-                  <div className="text-sm mr-3 mb-3">
-                    {formatDate(item.endDate)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-                    )}
+              ))}
+            </div>
+          )}
           {/* </div> */}
           {showModal && <Modal onSubmit={handleModalSubmit} />}
         </section>
-          
       </div>
-          
-      {showModal && <Modal onSubmit={handleModalSubmit} />}
-          
+
+      {/* {showModal && <Modal onSubmit={handleModalSubmit} />} */}
     </div>
   );
 }

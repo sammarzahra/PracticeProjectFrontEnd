@@ -10,6 +10,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 // import { store } from "../../GlobalStateManagement/globalStore";
 
 function Login() {
+  
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -217,3 +218,4 @@ function Login() {
 }
 
 export default Login;
+

@@ -16,10 +16,11 @@ function Modal({ onSubmit }) {
   function crossDisplay() {
     setCross(!cross);
   }
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true on form submission
-  
+
     // Create a FormData object to hold the form data
     const formData = new FormData();
     formData.append('title', title);
@@ -29,8 +30,7 @@ function Modal({ onSubmit }) {
     if (file) {
       formData.append('file', file); // Append the file to form data
     }
-    console.log("file", file);
-    console.log("Form Data ia here ::: ", formData);
+
     axios.post('http://localhost:3000/api/tasks/addTasks', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -47,7 +47,6 @@ function Modal({ onSubmit }) {
         console.log(err);
       });
   };
-  
 
   return (
     <>
