@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TaskList from "../../../PreFYP/svg components/TaskList";
+import TaskList from "../../svg components/TaskList";
 
 const Menu = () => {
   return (
-    <div className="h-screen w-64 ">
-      <div className="mt-5 flex items-center justify-center">
+    <div className=" w-64 h-auto  ">
+      <div className="mt-5 flex items-center justify-center ">
         <TaskList></TaskList>
         <h1 className=" px-3 font-bold text-l text-[#4BCBEB]">
           Task List Manager
@@ -71,12 +71,12 @@ const Menu = () => {
           />
         </svg>
         <Link to="/dashboard">
-          <button className=" px-2 font-bold text-sm text-[#4BCBEB]">
+          <button className=" px-2 font-bold  text-sm text-[#4BCBEB]">
             Dashboard
           </button>
         </Link>
       </div>
-      <div className="flex mt-3 ml-6 py-3 px-3 h-11 w-52">
+      <div className="flex mt-3 ml-6 py-3 px-3 h-11 w-52 boarder-2 border-[#F1F5F9]">
         <svg
           width="22"
           height="22"
@@ -90,12 +90,12 @@ const Menu = () => {
           />
         </svg>
         <Link to="/users">
-          <button className=" px-2 font-medium text-sm text-[#64748B]">
+          <button className=" px-2 font-medium text-sm text-[#64748B] ">
             Users
           </button>
         </Link>
       </div>
-      <div className="flex mt-3 ml-6 py-3 px-3 h-11 w-52">
+      <div className="flex mt-3 ml-6 py-3 px-3 h-11 w-52 boarder-2 border-[#F1F5F9]">
         <svg
           width="22"
           height="22"

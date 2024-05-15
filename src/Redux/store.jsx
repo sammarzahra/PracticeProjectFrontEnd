@@ -1,12 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-import authReducer from "./authSlice";
+// // src/Redux/store.js
 
-const store = configureStore({
-  reducer: {
-    auth: authReducer,
-  },
-});
+// import { createStore, applyMiddleware } from "redux";
+// // import thunk from "redux-thunk";
 
-export const useAppDispatch = () => useDispatch();
-export default store;
+// // import thunk from 'redux-thunk';
+
+
+// import rootReducer from "./rootReducer" ;             
+// // @ts-ignore
+// const store = createStore(rootReducer, applyMiddleware);
+
+// export const useAppDispatch = () => store.dispatch;
+// export default store;
+// import { createStore } from "redux";
+// import rootReducer from "./rootReducer";
+
+// const store = createStore(rootReducer);
+
+// export const useAppDispatch = () => store.dispatch;
+// export default store;
+

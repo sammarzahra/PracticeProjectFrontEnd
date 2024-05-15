@@ -1,26 +1,53 @@
-import { createSlice } from "@reduxjs/toolkit";
+// // src/Redux/authSlice.jsx
 
-const initialState = {
-  token: localStorage.getItem("token") || null,
-  isAuthenticated: localStorage.getItem("token") ? true : false,
-};
+// const setToken = (token) => {
+//   return {
+//     type: 'auth/setToken',
+//     payload: token
+//   };
+// };
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    setToken(state, action) {
-      state.token = action.payload;
-      state.isAuthenticated = true;
-      localStorage.setItem("token", action.payload);
-    },
-    removeToken(state) {
-      state.token = null;
-      state.isAuthenticated = false;
-      localStorage.removeItem("token");
-    },
-  },
-});
+// const setName = (name) => {
+//   return {
+//     type: 'auth/setName',
+//     payload: name
+//   };
+// };
 
-export const { setToken, removeToken } = authSlice.actions;
-export default authSlice.reducer;
+// const setEmail = (email) => {
+//   return {
+//     type: 'auth/setEmail',
+//     payload: email
+//   };
+// };
+
+// const logout = () => {
+//   return {
+//     type: 'auth/logout'
+//   };
+// };
+
+// export { setToken, setName, setEmail, logout };
+// // src/Redux/authSlice.jsx
+// const initialState = {
+//   token: null,
+//   name: null,
+//   email: null,
+// };
+
+// const authReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case 'auth/setToken':
+//       return { ...state, token: action.payload };
+//     case 'auth/setName':
+//       return { ...state, name: action.payload };
+//     case 'auth/setEmail':
+//       return { ...state, email: action.payload };
+//     case 'auth/logout':
+//       return { ...initialState };
+//     default:
+//       return state;
+//   }
+// };
+
+// export default authReducer;

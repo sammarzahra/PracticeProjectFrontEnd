@@ -7,13 +7,17 @@ import Email from "../../../svg components/Email";
 import PassLock from "../../../svg components/PassLock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-// import { useDispatch } from "../../Redux/"
-// import { setToken } from './authSlice';
+// import { store } from "../../GlobalStateManagement/globalStore";
 
 function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [formError, setFormError] = useState("");
   const navigate = useNavigate();
 
   const handlePasswordChange = (e) => {
@@ -23,27 +27,6 @@ function Login() {
       setPasswordError("Your password is not strong enough.");
     } else {
       setPasswordError("");
-    }
-  };
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-
-  const collectData = async () => {
-    console.warn(name, email, password);
-    let result = await fetch("http://localhost:3000/api/users/signup", {
-      method: "post",
-      body: JSON.stringify({ name, email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result = await result.json();
-    console.warn(result);
-    if (result) {
-      localStorage.setItem("user", JSON.stringify(result));
-      navigate("/signup");
     }
   };
 
@@ -60,9 +43,53 @@ function Login() {
     }
   };
 
+  const validateName = () => {
+    if (name.trim() === "") {
+      setNameError("Please enter your full name.");
+    } else {
+      setNameError("");
+    }
+  };
+
+  const collectData = async () => {
+    validateName();
+    validateEmail();
+
+    if (
+      !name ||
+      !email ||
+      !password ||
+      emailError ||
+      passwordError ||
+      nameError
+    ) {
+      setFormError(".");
+      return;
+    }
+
+    try {
+      console.warn(name, email, password);
+      let result = await fetch("http://localhost:3000/api/users/signup", {
+        method: "post",
+        body: JSON.stringify({ name, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      result = await result.json();
+      console.warn(result);
+      if (result) {
+        localStorage.setItem("token", result.token);
+        navigate("/signup");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="main flex flex-col md:flex-row justify-center items-center h-screen">
-      <div className="left w-full md:w-1/2 bg-[#4BCBEB] h-auto px-6 md:px-20 py-20 bg-[  rgba(255, 255, 255, 0.06)] hidden md:block">
+      <div className="left w-full md:w-1/2 bg-[#4BCBEB] h-auto px-6 md:px-20 py-20 bg-[rgba(255, 255, 255, 0.06)] hidden md:block">
         <div className="flex items-center">
           <img src={vector} alt="Logo" className="mr-2" />
           <span>
@@ -71,12 +98,12 @@ function Login() {
         </div>
         <img src={bro} alt="Illustration" className="w-full" />
       </div>
-      <div className="right w-1/2 md:w-1/2  h-full py-20">
-        <div className="flex flex-col mx-6  md:mx-20">
+      <div className="right w-1/2 md:w-1/2 h-full py-20">
+        <div className="flex flex-col mx-6 md:mx-20">
           <h5 className="mb-3 font-bold text-3xl">Sign Up for an Account</h5>
           <div className="relative">
             <div className="flex items-center border border-solid border-gray-300 rounded w-4/5">
-              <div className=" mt-1 ml-2">
+              <div className="mt-1 ml-2">
                 <UserIcon />
               </div>
               <input
@@ -87,13 +114,17 @@ function Login() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                onBlur={validateName}
               />
             </div>
+            {nameError && (
+              <div className="text-red-500 text-xs mt-1">{nameError}</div>
+            )}
           </div>
           <br />
           <div className="relative">
             <div className="flex items-center border border-solid border-gray-300 rounded w-4/5">
-              <div className=" mt-1 ml-2">
+              <div className="mt-1 ml-2">
                 <Email />
               </div>
               <input
@@ -114,7 +145,7 @@ function Login() {
           <br />
           <div className="relative">
             <div className="flex items-center border border-solid border-gray-300 rounded w-4/5">
-              <div className=" mt-1 ml-2">
+              <div className="mt-1 ml-2">
                 <PassLock />
               </div>
               <input
@@ -156,14 +187,19 @@ function Login() {
           </div>
           <div className="text-center md:text-left">
             <button
-              className="mt-4 px-4 py-4 w-4/5 bg-[#4BCBEB]   text-white uppercase rounded text-xs tracking-wider"
-              type="submit"
+              className="mt-4 px-4 py-4 w-4/5 bg-[#4BCBEB] text-white uppercase rounded text-xs tracking-wider"
+              type="button"
               onClick={collectData}
             >
-              SignUp
+              Sign Up
             </button>
           </div>
-          <div className="mt-8  mx-16 font-semibold text-sm text-slate-500 text-center md:text-left">
+          {formError && (
+            <div className="text-red-500 text-xs mt-4 text-center">
+              {formError}
+            </div>
+          )}
+          <div className="mt-8 mx-16 font-semibold text-sm text-slate-500 text-center md:text-left">
             Already have an account?
             <span>
               <a

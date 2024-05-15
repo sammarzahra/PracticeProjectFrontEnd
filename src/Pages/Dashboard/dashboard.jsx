@@ -7,9 +7,13 @@ import "react-calendar/dist/Calendar.css";
 import Header from "../../components/Header";
 import Menu from "../../components/Menu";
 import { useMediaQuery } from "@react-hook/media-query";
+import { useSnapshot } from "valtio";
+import { store } from "../../GlobalStateManagement/globalStore";
 
 function Dashboard() {
+  const snapshot = useSnapshot(store);
   const [date, setDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
   const onChange = (newDate) => {
     setDate(newDate);
   };
@@ -44,7 +48,7 @@ function Dashboard() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className=" flex flex-col md:flex-row  h-screen">
+    <div className=" flex flex-col md:flex-row  h-auto ">
       {!isLargeScreen && (
         <div className="md:hidden">
           <button
@@ -79,57 +83,62 @@ function Dashboard() {
 
       {isLargeScreen && <Menu />}
 
-      <div className="  w-full  md:w-10/12 bg-[#F6F8FA]">
+      <div className="  w-100% h-auto md:w-10/12 bg-[#F6F8FA]">
         <Header name="Dashboard" />
 
         {/*=================pl-[2px]============================ This is bottom part =======================================*/}
-        <section className="bg-white row-span-2 col-span-2 m-20 ">
+        <section className="bg-white row-span-2 col-span-2 m-14 ">
           <h1 className="text-2xl font-bold  p-6">Analytics</h1>
           {/* ==========================This is bottom grid section for progress bar================================= */}
-
-          <section className="  grid grid-cols-4 gap-4">
-            <div className=" bg-[#F4F2FF] h-32 m-4 rounded-2xl  p-4">
-              <h1 className=" pb-3 font-medium">Total Task</h1>
-              <div className="mb-1 text-xl font-medium text-[#64748B]  pb-2">
-                90/100
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
-                <div className="bg-[#4BCBEB] h-4 rounded-full  w-4/5"></div>
-              </div>
+          {loading ? (
+            <div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-800"></div>
             </div>
+          ) : (
+            <section className="  grid grid-cols-4 gap-4">
+              <div className=" bg-[#F4F2FF] h-32 m-4 rounded-2xl  p-4">
+                <h1 className=" pb-3 font-medium">Total Task</h1>
+                <div className="mb-1 text-xl font-medium text-[#64748B]  pb-2">
+                  35
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
+                  <div className="bg-[#4BCBEB] h-4 rounded-full  w-full"></div>
+                </div>
+              </div>
 
-            <div className=" bg-[#E2EFFC] h-32 m-4 rounded-2xl p-4">
-              <h1 className=" pb-3 font-medium">Completed Task</h1>
-              <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
-                80/100
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                <div className="bg-[#5CB85C] h-4 rounded-full w-2/4"></div>
-              </div>
-            </div>
-
-            <div className=" bg-[#FBEDD2] h-32 m-4 rounded-2xl p-4">
-              <h1 className=" pb-3 font-medium">Pending Task</h1>
-              <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
-                50/100
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
-                <div className="bg-[#F0AD4E] h-4 rounded-full  w-2/5"></div>
-              </div>
-            </div>
-
-            <div className=" bg-[#E0F6F4] h-32 m-4 rounded-2xl p-4">
-              <h1 className=" pb-3 font-medium"> Decline Task</h1>
-              <div>
+              <div className=" bg-[#E2EFFC] h-32 m-4 rounded-2xl p-4">
+                <h1 className=" pb-3 font-medium">Completed Task</h1>
                 <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
-                  10/100
+                  12/30
                 </div>
-                <div clasName="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
-                  <div className="bg-[#D9534F] h-4 rounded-full  w-1/5"></div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                  <div className="bg-[#5CB85C] h-4 rounded-full w-2/5"></div>
                 </div>
               </div>
-            </div>
-          </section>
+
+              <div className=" bg-[#FBEDD2] h-32 m-4 rounded-2xl p-4">
+                <h1 className=" pb-3 font-medium">Pending Task</h1>
+                <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
+                  10/30
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
+                  <div className="bg-[#F0AD4E] h-4 rounded-full  w-1/5"></div>
+                </div>
+              </div>
+
+              <div className=" bg-[#E0F6F4] h-32 m-4 rounded-2xl p-4">
+                <h1 className=" pb-3 font-medium"> Decline Task</h1>
+                <div>
+                  <div className="mb-1 text-xl font-medium text-[#64748B] pb-2">
+                    13/30
+                  </div>
+                  <div clasName="w-full bg-gray-200 rounded-full h-2.5 mb-4 ">
+                    <div className="bg-[#D9534F] h-4 rounded-full  w-2/5"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* ======================================This is another grid for chart and calender========================== */}
 
@@ -185,7 +194,7 @@ function Dashboard() {
               </div>
             </div>
             <div className=" bg-white p-4">
-              <h1 className=" text-2xl font-bold p-6 m-1">Calender</h1>
+              <h1 className=" text-2xl font-bold p-8 m-1 mr-[16]">Calender</h1>
               <div className=" bg-white pl-[80px]">
                 <Calendar onChange={onChange} value={date} />
               </div>
