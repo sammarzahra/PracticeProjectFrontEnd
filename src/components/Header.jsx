@@ -39,7 +39,7 @@ const Header = ({ name }) => {
   //   fetchUserName();
   // }, []);
   return (
-    <div className="flex h-16 bg-white ">
+    <div className=" flex h-16 bg-white ">
       <p className="px-9 py-3 font-extrabold text-2xl text-black">{name}</p>
       <div className="ml-[650px]   flex">
         <Link to="/notifications">

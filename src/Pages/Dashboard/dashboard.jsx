@@ -48,8 +48,7 @@ function Dashboard() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-
-    <div className=" flex flex-col md:flex-row  h-screen w-full ">
+    <div className=" flex flex-col md:flex-row  h-auto ">
       {!isLargeScreen && (
         <div className="md:hidden">
           <button
@@ -84,12 +83,12 @@ function Dashboard() {
 
       {isLargeScreen && <Menu />}
 
-      <div className="   ml-56 w-100%  md:w-10/12 bg-[#F6F8FA]">
+      <div className="  w-100% h-auto md:w-10/12 bg-[#F6F8FA]">
         <Header name="Dashboard" />
 
         {/*=================pl-[2px]============================ This is bottom part =======================================*/}
 
-        <section className="bg-white row-span-1 col-span-2  m-14 mr-5  ">
+        <section className="bg-white row-span-2 col-span-2  m-14  ">
                     <h1 className="text-2xl font-bold  p-6">Analytics</h1>
                     {/* ==========================This is bottom grid section for progress bar================================= */}
                     <section className="  grid md:grid-cols-4 md:gap-4 grid-cols-1 gap-6 mt-4 ">

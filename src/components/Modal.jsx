@@ -37,8 +37,9 @@ function Modal({ onSubmit }) {
       }
     })
       .then(result => {
+        console.log(result)
         const newData = { title, description, startDate, endDate, file: result.data.file }; // Include file data in newData
-        onSubmit(newData);
+        onSubmit(result.data);
         setLoading(false); // Set loading to false after successful submission
         console.log(result);
       })
